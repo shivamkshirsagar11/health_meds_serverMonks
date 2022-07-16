@@ -29,6 +29,35 @@ class Product(models.Model):
         else:
             return Product.objects.all()
 
+class Cart_generator(models.Model):
+    import secrets
+    import string
+    user_id = models.IntegerField(default=-1)
+    cart_id = models.CharField(default="to_be_assigned",max_length=100)
+
+    def __str__(self):return str(self.user_id)+"->"+self.cart_id
+
+    @staticmethod
+    def get_cart_id(user_id):
+        return Cart_generator.objects.filter(user_id = user_id).first()
+    def generate_cart(self):
+        temp = ''.join(self.secrets.choice(self.string.ascii_uppercase + self.string.digits)
+              for i in range(7))
+        return str(temp)
+    def get_cart_items(cart_no):
+        return Cart_Item.objects.filter(cart_no=cart_no)
+
+class Cart_Item(models.Model):
+    cart_no = models.CharField(default="N/A",max_length=100)
+    product_name = models.CharField(max_length=200)
+    product_price = models.CharField(max_length=10)
+    time_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self): return self.product_name+"->"+str(self.user_id)
+    # @staticmethod
+    # def get_cart(id):
+    #     Cart.objects.filter(user_id=id).first()
+
 
 
 

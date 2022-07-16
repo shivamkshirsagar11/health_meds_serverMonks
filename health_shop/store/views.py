@@ -11,6 +11,8 @@ def auth(request):
         user = au.objects.filter(email=email, password=password).first()
         if user:
             products = p.get_all_products()
+            global userID
+            userID = user.id
             return render(request, 'home.html',{"products":products})
         else:
             return render(request, 'login.html',{"msg":"user not found!!"})
