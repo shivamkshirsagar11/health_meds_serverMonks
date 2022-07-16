@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from store.models import Auth_User as au,Product as p
+from store.models import Auth_User as au,Product as p,Cart_generator as cg
 
 def login(request):
     return render(request, 'login.html')
@@ -35,3 +35,10 @@ def register_check(request):
             user.save()
             return render(request, 'login.html',{"msg":"Registration successful!"})
        
+def load_cart(request):
+    cartObj = cg.get_cart(userID)
+    if cartObj is None:
+        return render(request, 'cart.html',{"msg":"Nothing in cart right now"})
+    else:
+        cartItems = cg.get_cart_items(cartObj.cart_no)
+        return render(request, 'cart.html',{"cart_items":cartItems})
