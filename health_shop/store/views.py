@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from store.models import Auth_User as au
 
 def login(request):
-    return render(request, 'signin.html')
+    return render(request, 'login.html')
 
 def auth(request):
     if request.method == 'POST':
@@ -12,7 +12,7 @@ def auth(request):
         if user:
             return render(request, 'home.html')
         else:
-            return render(request, 'signin.html',{"msg":"user not found!!"})
+            return render(request, 'login.html',{"msg":"user not found!!"})
 
 def register(request):
     return render(request, 'register.html')
@@ -30,6 +30,6 @@ def register_check(request):
         else:
             user = au(email=email,password=password,name=name,phone=phone,address=address)
             user.save()
-            return render(request, 'signin.html',{"msg":"Registration successful!"})
+            return render(request, 'login.html',{"msg":"Registration successful!"})
 
         
