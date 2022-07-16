@@ -38,7 +38,7 @@ class Cart_generator(models.Model):
     def __str__(self):return str(self.user_id)+"->"+self.cart_id
 
     @staticmethod
-    def get_cart_id(user_id):
+    def get_cart(user_id):
         return Cart_generator.objects.filter(user_id = user_id).first()
     def generate_cart(self):
         temp = ''.join(self.secrets.choice(self.string.ascii_uppercase + self.string.digits)
