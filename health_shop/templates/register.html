@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="Description" content="Enter your description here"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="assets/css/style.css">
+<title>Register</title>
+</head>
+<body>
+  <div class="container form">
+<h1>Register</h1>
+{% if msg%}
+<span style="color:red;">
+    {{msg}}
+</span>
+{% endif%}
+<form action="register_check" method="post">
+  {% csrf_token %}
+  <br>
+<div class="form-group">
+  Email :
+  <label for=""></label>
+  <input type="email" class="form-control" name="email" id="" aria-describedby="emailHelpId" placeholder="">
+  <small id="emailHelpId" class="form-text text-muted"></small>
+</div>
+<br>
+<div class="form-group">
+  Password :
+  <label for=""></label>
+  <input type="password" class="form-control" name="password" id="" placeholder="">
+</div><br>
+<div class="form-group">
+  Username :
+  <label for=""></label>
+  <input type="name" class="form-control" name="name" id=""  placeholder="">
+  
+</div>
+<br>
+
+<div class="form-group">
+  Phone :
+  <label for=""></label>
+  <input type="text" class="form-control" name="phone" id="" placeholder="">
+  <small  class="form-text text-muted"></small>
+</div>
+<br>
+
+<div class="form-group">
+  Address :
+  <label for=""></label>
+  <input type="text" class="form-control" name="address" id="" placeholder="">
+  <small  class="form-text text-muted"></small>
+</div>
+<br>
+<div class="form-group">
+  Photo :
+  <label for=""></label>
+  <input type="text" class="form-control" name="image" id="" placeholder="">
+  <small  class="form-text text-muted"></small>
+</div>
+<br>
+<button type="submit" class="btn btn-dark">Submit</button>
+</form>
+<a href="/">Already have account?</a>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.0/js/bootstrap.min.js"></script>
+</body>
+</html>
