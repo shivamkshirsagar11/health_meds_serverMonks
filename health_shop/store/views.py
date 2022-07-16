@@ -47,3 +47,14 @@ def open_cart(request):
     else:
         cartItems = cg.get_cart_items(cartObj.cart_no)
         return render(request, 'cart.html',{"cart_items":cartItems})
+
+def shop_single(request,id):
+    context={}
+    context["product"]=p.objects.get(id=id)
+    return render(request,'shop-single.html',context)
+
+def about(request):
+    return render(request,'about.html')
+
+def contact(request):
+    return render(request,'contact.html')
