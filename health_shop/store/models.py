@@ -15,7 +15,8 @@ class Auth_User(models.Model):
 class Product(models.Model):
     name=models.CharField(max_length=50)
     discription=models.CharField(max_length=100,default='',null=True,blank=True)
-    price=models.IntegerField()
+    price=models.IntegerField(default=0,null=False)
+    off_price=models.IntegerField(default=0,null=False)
     category=models.CharField(max_length=100)
     image=models.ImageField(upload_to='product_details',default="user_profile/default.png")
  

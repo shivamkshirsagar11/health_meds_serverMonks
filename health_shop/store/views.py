@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from store.models import Auth_User as au
+from store.models import Auth_User as au,Product as p
 
 def login(request):
     return render(request, 'login.html')
@@ -10,7 +10,8 @@ def auth(request):
         password = request.POST['password']
         user = au.objects.filter(email=email, password=password).first()
         if user:
-            return render(request, 'home.html')
+            products = p.get_all_products()
+            return render(request, 'home.html',{"products":products})
         else:
             return render(request, 'login.html',{"msg":"user not found!!"})
 
@@ -31,5 +32,4 @@ def register_check(request):
             user = au(email=email,password=password,name=name,phone=phone,address=address)
             user.save()
             return render(request, 'login.html',{"msg":"Registration successful!"})
-
-        
+       
