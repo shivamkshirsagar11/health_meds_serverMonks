@@ -7,3 +7,6 @@ class Auth_User(models.Model):
     phone = models.CharField(max_length=10)
     address = models.CharField(max_length=300)
     photo = models.ImageField(upload_to="user_profile",default="user_profile/default.png")
+
+    def __str__(self):
+        return self.name

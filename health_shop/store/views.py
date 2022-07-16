@@ -24,12 +24,11 @@ def register_check(request):
         name = request.POST['name']
         phone = request.POST['phone']
         address = request.POST['address']
-        image = request.FILES.get('profile')
         user = au.objects.filter(email=email).first()
         if user:
             return render(request, 'register.html',{"msg":"Email already registered!!"})
         else:
-            user = au(email=email,password=password,name=name,phone=phone,address=address,photo=image)
+            user = au(email=email,password=password,name=name,phone=phone,address=address)
             user.save()
             return render(request, 'login.html',{"msg":"Registration successful!"})
 
