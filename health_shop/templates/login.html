@@ -22,19 +22,22 @@
 			<div class="box-header">
 				<h2>Log In</h2>
 			</div>
-			<label for="username">Username</label>
+			<form action="/login" method="post">
+				{% csrf_token %}
+			<label for="email">Email</label>
 			<br/>
-			<input type="text" id="username">
+			<input type="text" name="email" id="email">
 			<br/>
 			<label for="password">Password</label>
 			<br/>
-			<input type="password" id="password">
+			<input type="password" name="password" id="password">
 			<br/>
 			<button type="submit">Sign In</button>
 			<br/>
+		</form>
 			<a href="#"><p class="small">Forgot your password?</p></a>
 			<br>
-			<a href="signup.html"><p class="small">Don't have account?</p></a>
+			<a href="register"><p class="small">Don't have account?</p></a>
 		</div>
 	</div>
 </body>
