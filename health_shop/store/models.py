@@ -19,7 +19,9 @@ class Product(models.Model):
     off_price=models.IntegerField(default=0,null=False)
     category=models.CharField(max_length=100)
     image=models.ImageField(upload_to='product_details',default="user_profile/default.png")
- 
+    
+    def __str__(self):
+        return self.name
     @staticmethod
     def get_all_products():
         return Product.objects.all()
