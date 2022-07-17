@@ -15,6 +15,9 @@ urlpatterns = [
     path('logout',views.logout,name='logout'),
     path('checkout',views.checkout,name='checkout'),
     path('ty',views.ty,name='ty'),
+    path('<category>/shop',views.shop,name='shop'),
+    path('shop',views.shop1,name='shop1'),
+    
     
 
     # path('history',views.history,name='history'),

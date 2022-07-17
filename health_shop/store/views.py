@@ -136,4 +136,21 @@ def ty(request):
     cartItems.delete()
     return render(request,'thankyou.html')
 
+def shop(request,category):
+    
+    if category:
+         products=p.objects.filter(category=category)
+         return render(request,'shop.html',{"products":products,"cat":1})
+    else:
+        products = p.get_all_products()
+        return render(request,'shop.html',{"products":products})
+
+def shop1(request):
+    products = p.get_all_products()
+    return render(request,'shop.html',{"products":products})
+
+   
+
+    
+
 
