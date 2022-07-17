@@ -84,7 +84,7 @@ def addProduct(request):
             cart_gen_obj = cg(cart_id = cart_id_generated,user_id = userID)
             cart_gen_obj.save()
             prod_temp = p.get_products_by_id(prod_id)
-            cart_item_obj = ci(cart_no = cart_id_generated,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price=prod_temp.price)
+            cart_item_obj = ci(cart_no = cart_id_generated,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price=int(prod_temp.price)*int(total))
             cart_item_obj.save()
         else:
             cartObj = cg.get_cart(userID)
@@ -95,7 +95,7 @@ def addProduct(request):
                 itemObj.save()
             else:
                 prod_temp = p.get_products_by_id(prod_id)
-                cart_item_obj = ci(cart_no = cartObj.cart_id,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price = prod_temp.price)
+                cart_item_obj = ci(cart_no = cartObj.cart_id,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price = int(prod_temp.price)*int(total))
                 cart_item_obj.save()
     return JsonResponse({"Done":"Done"})
 
