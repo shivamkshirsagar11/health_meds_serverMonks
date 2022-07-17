@@ -149,6 +149,9 @@ def shop1(request):
     products = p.get_all_products()
     return render(request,'shop.html',{"products":products})
 
+
+def history(request):
+    return render(request,'history.html')
    
 
     
