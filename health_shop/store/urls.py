@@ -11,6 +11,11 @@ urlpatterns = [
     path('<id>/shop_single',views.shop_single,name='shop_sinlge'),
     path('contact',views.contact,name='contact'),
     path('about',views.about,name='cabout'),
+    path('rmprod',views.rmprod,name='rmprod'),
+    path('logout',views.logout,name='logout'),
+    path('checkout',views.checkout,name='checkout'),
+    path('ty',views.ty,name='ty'),
+    
 
     # path('history',views.history,name='history'),
 ]

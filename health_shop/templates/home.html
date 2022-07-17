@@ -59,6 +59,7 @@
                 <li><a href="/about">About</a></li>
                 <li><a href="/contact">Contact</a></li>
                 <li><a href="/history">Your Orders</a></li>
+                <li><a href="/logout">Log Out</a></li>
               </ul>
             </nav>
           </div>
@@ -139,16 +140,16 @@
             <h2 class="text-uppercase">Popular Products</h2>
           </div>
         </div>
-{% for product in products %}
         <div class="row">
+          {% for product in products %}
           <div class="col-sm-6 col-lg-4 text-center item mb-4">
             <span class="tag">Sale</span>
             <a href="{{product.id}}/shop_single"> <img src="/media/{{product.image}}" alt="Image" height="250px" width="250px"></a>
             <h3 class="text-dark"><a href="shop-single.html">{{product.name}}</a></h3>
-            <p class="price"><del>{{product.off_price}}</del> &mdash; ₹{{product.price}}</p>
+            <p class="price"><del>{{product.price}}</del> &mdash; ₹{{product.off_price}}</p>
           </div>
+          {% endfor %}
         </div>
-{% endfor %}
 
         <div class="row mt-5">
           <div class="col-12 text-center">

@@ -204,21 +204,17 @@
                       <th>Total</th>
                     </thead>
                     <tbody>
+                      {% for i in cart_items %}
                       <tr>
-                        <td>Bioderma <strong class="mx-2">x</strong> 1</td>
-                        <td>₹55.00</td>
+                        <td>{{i.product_name}} <strong class="mx-2">x</strong> {{i.total_ord}}</td>
+                        <td>₹{{i.total_price}}</td>
                       </tr>
-                      <tr>
-                        <td>Ibuprofeen <strong class="mx-2">x</strong> 1</td>
-                        <td>₹45.00</td>
-                      </tr>
-                      <tr>
-                        <td class="text-black font-weight-bold"><strong>Cart Subtotal</strong></td>
-                        <td class="text-black">₹350.00</td>
-                      </tr>
+                      {%endfor%}
                       <tr>
                         <td class="text-black font-weight-bold"><strong>Order Total</strong></td>
-                        <td class="text-black font-weight-bold"><strong>₹350.00</strong></td>
+                        <td class="text-black font-weight-bold"><strong>₹{{cart_gen.total_of_cart}}</strong></td>
+                        <td class="text-black font-weight-bold"><strong>Order Id</strong></td>
+                        <td class="text-black font-weight-bold"><strong>{{cart_gen.cart_id}}</strong></td>
                       </tr>
                     </tbody>
                   </table>
@@ -260,7 +256,7 @@
                   </div>
     
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='thankyou.html'">Place
+                    <button class="btn btn-primary btn-lg btn-block" onclick="goto()">Place
                       Order</button>
                   </div>
     
@@ -333,7 +329,17 @@
   <script src="js/aos.js"></script>
 
   <script src="js/main.js"></script>
+<script>
+  function goto(){
+    var x = confirm("want to place order??");
+    if (x){
+      location.replace("/ty");
+    }
+    else{
 
+    }
+  }
+</script>
 </body>
 
 </html>

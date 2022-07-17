@@ -1,3 +1,4 @@
+from urllib import request
 from django.http import JsonResponse
 from django.shortcuts import render,redirect
 from store.models import Auth_User as au,Product as p,Cart_generator as cg,Cart_Item as ci
@@ -48,8 +49,14 @@ def open_cart(request):
     if cartObj is None:
         return render(request, 'cart.html',{"msg":"Nothing in cart right now"})
     else:
+        grand_total(request)
+        cartObj = cg.get_cart(userID)
         cartItems = cg.get_cart_items(cartObj.cart_id)
-        return render(request, 'cart.html',{"cart_items":cartItems})
+        if len(cartItems) == 0:
+            cartObj.delete()
+            cartItems.delete()
+            return render(request, 'cart.html',{"msg":"Nothing in cart right now"})
+        return render(request, 'cart.html',{"cart_items":cartItems,"cart_gen":cartObj})
 
 def shop_single(request,id):
     context={}
@@ -91,4 +98,42 @@ def addProduct(request):
                 cart_item_obj = ci(cart_no = cartObj.cart_id,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price = prod_temp.price)
                 cart_item_obj.save()
     return JsonResponse({"Done":"Done"})
+
+@csrf_exempt
+def rmprod(request):
+    if request.method == "POST":
+        pid = request.POST['id']
+        cartObj = cg.get_cart(userID)
+        if cartObj:
+            item = ci.objects.get(Q(cart_no = cartObj.cart_id) & Q(product_id = pid))
+            item.delete()
+    return JsonResponse({"Done":"Done"})
+
+def logout(request):
+    global userID
+    userID = -1
+    return render(request,'login.html',{"msg":"logout successfull!"})
+
+def checkout(request):
+    grand_total(request)
+    cartObj = cg.get_cart(userID)
+    items = cg.get_cart_items(cartObj.cart_id) 
+    return render(request,'checkout.html',{"cart_gen":cartObj,"cart_items":items})
+
+def grand_total(request):
+    cartObj = cg.get_cart(userID)
+    items = cg.get_cart_items(cartObj.cart_id)
+    tot = 0
+    for i in items:
+        tot = tot+int(i.total_price)
+    cartObj.total_of_cart = tot
+    cartObj.save()
+
+def ty(request):
+    cartObj = cg.get_cart(userID)
+    cartItems = cg.get_cart_items(cartObj.cart_id)
+    cartObj.delete()
+    cartItems.delete()
+    return render(request,'thankyou.html')
+
 

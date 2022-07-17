@@ -37,6 +37,7 @@ class Product(models.Model):
 class Cart_generator(models.Model):
     user_id = models.IntegerField(default=-1)
     cart_id = models.CharField(default="to_be_assigned",max_length=100)
+    total_of_cart = models.IntegerField(default=0)
 
     def __str__(self):return str(self.user_id)+"->"+self.cart_id
 

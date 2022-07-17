@@ -130,7 +130,7 @@
     
                     </td>
                     <td>₹{{i.total_price}}</td>
-                    <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
+                    <td><a class="btn btn-primary height-auto btn-sm" onclick="removeProd('{{i.product_id}}')">X</a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -170,26 +170,18 @@
                     <h3 class="text-black h4 text-uppercase">Cart Totals</h3>
                   </div>
                 </div>
-                <div class="row mb-3">
-                  <div class="col-md-6">
-                    <span class="text-black">Subtotal</span>
-                  </div>
-                  <div class="col-md-6 text-right">
-                    <strong class="text-black">₹230.00</strong>
-                  </div>
-                </div>
                 <div class="row mb-5">
                   <div class="col-md-6">
                     <span class="text-black">Total</span>
                   </div>
                   <div class="col-md-6 text-right">
-                    <strong class="text-black">₹230.00</strong>
+                    <strong class="text-black">₹{{cart_gen.total_of_cart}}</strong>
                   </div>
                 </div>
     
                 <div class="row">
                   <div class="col-md-12">
-                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='checkout.html'">Proceed To
+                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location='/checkout'">Proceed To
                       Checkout</button>
                   </div>
                 </div>
@@ -252,16 +244,31 @@
     </footer>
   </div>
 
-  <script src="js/jquery-3.3.1.min.js"></script>
-  <script src="js/jquery-ui.js"></script>
-  <script src="js/popper.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/owl.carousel.min.js"></script>
-  <script src="js/jquery.magnific-popup.min.js"></script>
-  <script src="js/aos.js"></script>
+  <script src="{% static 'js/jquery-3.3.1.min.js'%}"></script>
+  <script src="{% static 'js/jquery-ui.js'%}"></script>
+  <script src="{% static 'js/popper.min.js'%}"></script>
+  <script src="{% static 'js/bootstrap.min.js'%}"></script>
+  <script src="{% static 'js/owl.carousel.min.js'%}"></script>
+  <script src="{% static 'js/jquery.magnific-popup.min.js'%}"></script>
+  <script src="{% static 'js/aos.js'%}"></script>
 
-  <script src="js/main.js"></script>
-
+  <script src="{% static 'js/main.js'%}"></script>
+<script>
+  function removeProd(a){
+    
+    $.ajax({
+          type:'POST',
+          url:'/rmprod',
+          data:{
+              id:a,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          },
+          success: function(data){
+            location.replace("/load_cart");
+          }
+        });
+  }
+</script>
 </body>
 
 </html>
