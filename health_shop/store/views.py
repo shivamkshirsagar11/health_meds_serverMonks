@@ -1,5 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import render,redirect
-from store.models import Auth_User as au,Product as p,Cart_generator as cg
+from store.models import Auth_User as au,Product as p,Cart_generator as cg,Cart_Item as ci
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 global userID
 userID = -1
 def login(request):
@@ -20,7 +23,7 @@ def auth(request):
     else:
         products = p.get_all_products()
         if userID != -1:return render(request, 'home.html',{"products":products})
-        return render(request, 'login.html',{"msg":"SOme error occured!!"})
+        return render(request, 'login.html',{"msg":"Sme error occured!!"})
 
 def register(request):
     return render(request, 'register.html')
@@ -45,7 +48,7 @@ def open_cart(request):
     if cartObj is None:
         return render(request, 'cart.html',{"msg":"Nothing in cart right now"})
     else:
-        cartItems = cg.get_cart_items(cartObj.cart_no)
+        cartItems = cg.get_cart_items(cartObj.cart_id)
         return render(request, 'cart.html',{"cart_items":cartItems})
 
 def shop_single(request,id):
@@ -56,5 +59,36 @@ def shop_single(request,id):
 def about(request):
     return render(request,'about.html')
 
+# def about(request):
+#     return render(request,'history.html')
+
 def contact(request):
     return render(request,'contact.html')
+@csrf_exempt
+def addProduct(request):
+    global userID
+    if userID == -1:return render(request, 'login.html',{"msg":"Some error occured!!"})
+    elif request.method == 'POST':
+        prod_id = request.POST['id']
+        total = request.POST['tot']
+        cartObj = cg.get_cart(userID)
+        if cartObj is None:
+            cart_id_generated = cg.generate_cart()
+            cart_gen_obj = cg(cart_id = cart_id_generated,user_id = userID)
+            cart_gen_obj.save()
+            prod_temp = p.get_products_by_id(prod_id)
+            cart_item_obj = ci(cart_no = cart_id_generated,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price=prod_temp.price)
+            cart_item_obj.save()
+        else:
+            cartObj = cg.get_cart(userID)
+            itemObj = ci.objects.filter(Q(cart_no = cartObj.cart_id) & Q(product_id = prod_id)).first()
+            if itemObj is not None:
+                itemObj.total_ord = int(itemObj.total_ord) + int(total)
+                itemObj.total_price = int(itemObj.product_price)*int(itemObj.total_ord)
+                itemObj.save()
+            else:
+                prod_temp = p.get_products_by_id(prod_id)
+                cart_item_obj = ci(cart_no = cartObj.cart_id,product_name = prod_temp.name,product_price = prod_temp.price,total_ord = total,product_id = prod_id,image = prod_temp.image,total_price = prod_temp.price)
+                cart_item_obj.save()
+    return JsonResponse({"Done":"Done"})
+

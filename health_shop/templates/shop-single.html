@@ -110,14 +110,14 @@
                   <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
                 </div>
                 <input type="text" class="form-control text-center" value="1" placeholder=""
-                  aria-label="Example text with button addon" aria-describedby="button-addon1">
+                  aria-label="Example text with button addon" aria-describedby="button-addon1" id="tot_ord">
                 <div class="input-group-append">
                   <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
                 </div>
               </div>
     
             </div>
-            <p><a href="cart.html" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
+            <p><a class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary" onclick="addProduct('{{product.id}}')">Add To Cart</a></p>
 
             <div class="mt-5">
               <ul class="nav nav-pills mb-3 custom-pill" id="pills-tab" role="tablist">
@@ -217,7 +217,23 @@
   <script src="{% static 'js/aos.js'%}"></script>
 
   <script src="{% static 'js/main.js'%}"></script>
-
+<script>
+  function addProduct(a){
+    var x = document.getElementById("tot_ord").value;
+    $.ajax({
+          type:'POST',
+          url:'/addprod',
+          data:{
+              id:a,
+              tot:x,
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          },
+          success: function(data){
+            location.replace("/login");
+          }
+        });
+  }
+</script>
 </body>
 
 </html>
