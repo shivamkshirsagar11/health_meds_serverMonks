@@ -9,3 +9,4 @@ Online Pharmacy Store
 HTML, CSS, JavaScript, Bootstrap, Python, Django
 
 ## Project Functionality
+1. 
